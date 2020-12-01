@@ -53,8 +53,7 @@ object StateTest {
     val warningStream = dataStream
       .keyBy( _.id )     // 以id分组
 //      .flatMap( new TempChangeWarning(10.0) )
-      .flatMapWithState[(String, Double, Double), Double](
-      {
+      .flatMapWithState[(String, Double, Double), Double]({
         case (inputData: SensorReading, None) => (List.empty, Some(inputData.temperature))
         case (inputData: SensorReading, lastTemp: Some[Double]) =>
           val diff = (inputData.temperature - lastTemp.get).abs
@@ -63,8 +62,7 @@ object StateTest {
           } else {
             ( List.empty, Some(inputData.temperature) )
           }
-      }
-    )
+      })
 
     warningStream.print()
 

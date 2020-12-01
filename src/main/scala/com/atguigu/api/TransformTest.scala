@@ -20,7 +20,7 @@ object TransformTest {
     env.setParallelism(1)
 
     // 读取数据
-    val filePath = "D:\\Projects\\BigData\\FlinkTutorial\\src\\main\\resources\\sensor.txt"
+    val filePath = "/Users/admin/java_code/flink_code/FlinkTutorial/src/main/resources/sensor.txt"
     val inputStream: DataStream[String] = env.readTextFile(filePath)
 
     // 1. 基本转换
@@ -59,21 +59,25 @@ object TransformTest {
     // 3.2 连接两条流
     val warningStream = highTempStream.map( data => (data.id, data.temperature) )
     val connectedStreams = warningStream.connect( lowTempStream )
-    val resultStream: DataStream[Any] = connectedStreams
+
+
+    val resultStream : DataStream[Any] = connectedStreams
         .map(
           warningData => (warningData._1, warningData._2, "high temp warning"),
           lowTempData => (lowTempData.id, "low temp")
         )
 
+
+
     val unionStream = highTempStream.union(lowTempStream, allTempStream)
 
-    dataStream.print("data")
-//    reduceStream.print("reduce")
+//   reduceStream.print("reduce")
+//    dataStream.print("data")
 //    highTempStream.print("high")
 //    lowTempStream.print("low")
 //    allTempStream.print("all")
 
-//    resultStream.print("result")
+    resultStream.print("result")
 
     env.execute("transform test")
   }

@@ -5,8 +5,8 @@ import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.windowing.time.Time
-import org.apache.flink.table.api.{Over, Tumble}
 import org.apache.flink.table.api.scala._
+import org.apache.flink.table.api.{Over, Tumble}
 import org.apache.flink.types.Row
 
 /**
@@ -18,7 +18,7 @@ import org.apache.flink.types.Row
   *
   * Created by wushengran on 2020/9/4 15:38
   */
-object TimeAndWindowTest {
+object BlinkTest {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)

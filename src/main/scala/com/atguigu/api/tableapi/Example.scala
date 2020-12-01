@@ -13,6 +13,8 @@ import org.apache.flink.table.api.scala._
   * Version: 1.0
   *
   * Created by wushengran on 2020/9/4 10:09
+ *
+ * 初始入门案例。
   */
 object Example {
   def main(args: Array[String]): Unit = {
@@ -39,16 +41,21 @@ object Example {
       .select("id, temperature")
       .filter("id == 'sensor_1'")
 
-    // 2. 直接写sql，得到转换结果
+    // 2. 直接写sql，得到转换结果两种方式，
     tableEnv.createTemporaryView("datatable", dataTable)
-    val sql = "select id, temperature from datatable where id = 'sensor_1'"
+    val sql = "select id, temperature from datatable where id = 'sensor_1' "
     val resultSqlTable = tableEnv.sqlQuery(sql)
-
+//
 //    resultTable.printSchema()
 //    val resultStream = resultTable.toAppendStream[(String, Double)]
-//    resultStream.print("res")
+//    resultStream.print("tableapi结果")
+
     val resultSqlStream = resultSqlTable.toAppendStream[(String, Double)]
-    resultSqlStream.print("sql")
+
+    resultSqlStream.print("flinksql结果：")
+
+
+
 
     env.execute("table api example")
   }
